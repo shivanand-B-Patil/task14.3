@@ -1,0 +1,19 @@
+- hosts: target
+  vars_files:
+     - "{{ ansible_facts['distribution'] }}-{{ ansible_facts['distribution_major_version'] }}.yml"
+
+  tasks:
+  - name: "Package Installation"
+    package:
+            name: "{{ package_name }}"
+            state: present
+
+  - name: "Copy the file"
+    template:
+            dest: "{{ path }}"
+            src: "/root/task14.3/index.html.j2"
+
+  - name: "Starting the Services"
+    service:
+            name: "{{service}}"
+            state: started
